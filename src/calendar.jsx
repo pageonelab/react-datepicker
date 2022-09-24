@@ -120,6 +120,7 @@ export default class Calendar extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
+    monthsShownStartDate: PropTypes.instanceOf(Date),
     monthSelectedIn: PropTypes.number,
     nextMonthAriaLabel: PropTypes.string,
     nextYearAriaLabel: PropTypes.string,
@@ -258,11 +259,15 @@ export default class Calendar extends React.Component {
   };
 
   getDateInView = () => {
-    const { preSelection, selected, openToDate } = this.props;
+    const { preSelection, selected, openToDate, monthsShownStartDate } =
+      this.props;
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
     const current = newDate();
-    const initialDate = openToDate || selected || preSelection;
+    const initialDate =
+      monthsShownStartDate || openToDate || selected || preSelection;
+    console.log("monthsShownStartDate");
+    console.log(monthsShownStartDate);
     if (initialDate) {
       return initialDate;
     } else {

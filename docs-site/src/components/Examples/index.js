@@ -87,6 +87,7 @@ import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
 import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates";
 import CalendarStartDay from "../../examples/calendarStartDay";
+import MultiMonthsCalendarStartDate from "../../examples/multiMonthCalendarStartDate";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -445,6 +446,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Start day",
       component: CalendarStartDay,
+    },
+    {
+      title: "Multimonth Calendar Start date",
+      component: MultiMonthsCalendarStartDate,
     },
   ];
 
