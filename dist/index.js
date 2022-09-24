@@ -2728,16 +2728,14 @@ var Fr = [
           var e = a.props,
             t = e.preSelection,
             r = e.selected,
-            n = e.openToDate,
-            o = e.monthsShownStartDate,
-            s = ur(a.props),
-            i = fr(a.props),
-            p = Mt(),
-            l = o || n || r || t;
+            n = e.openToDate;
+          e.monthsShownStartDate;
+          var o = ur(a.props),
+            s = fr(a.props),
+            i = Mt(),
+            p = n || r || t;
           return (
-            console.log("monthsShownStartDate"),
-            console.log(o),
-            l || (s && Xe.default(p, s) ? s : i && Je.default(p, i) ? i : p)
+            p || (o && Xe.default(i, o) ? o : s && Je.default(i, s) ? s : i)
           );
         }),
         ut(vt(a), "increaseMonth", function () {
@@ -3281,30 +3279,28 @@ var Fr = [
         }),
         ut(vt(a), "renderMonths", function () {
           if (!a.props.showTimeSelectOnly && !a.props.showYearPicker) {
-            for (
-              var e = [],
-                t = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
-                r = ve.default(a.state.date, t),
-                n = 0;
-              n < a.props.monthsShown;
-              ++n
-            ) {
-              var o = n - a.props.monthSelectedIn,
-                s = fe.default(r, o),
-                i = "month-".concat(n),
-                p = n < a.props.monthsShown - 1,
-                l = n > 0;
+            var e = [],
+              t = a.props.monthsShownStartDate,
+              r = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
+              n = ve.default(a.state.date, r);
+            t < n && (n = t);
+            for (var o = 0; o < a.props.monthsShown; ++o) {
+              var s = o - a.props.monthSelectedIn,
+                i = fe.default(n, s),
+                p = "month-".concat(o),
+                l = o < a.props.monthsShown - 1,
+                c = o > 0;
               e.push(
                 ne.default.createElement(
                   "div",
                   {
-                    key: i,
+                    key: p,
                     ref: function (e) {
                       a.monthContainer = e;
                     },
                     className: "react-datepicker__month-container",
                   },
-                  a.renderHeader({ monthDate: s, i: n }),
+                  a.renderHeader({ monthDate: i, i: o }),
                   ne.default.createElement(Or, {
                     chooseDayAriaLabelPrefix: a.props.chooseDayAriaLabelPrefix,
                     disabledDayAriaLabelPrefix:
@@ -3312,7 +3308,7 @@ var Fr = [
                     weekAriaLabelPrefix: a.props.weekAriaLabelPrefix,
                     ariaLabelPrefix: a.props.monthAriaLabelPrefix,
                     onChange: a.changeMonthYear,
-                    day: s,
+                    day: i,
                     dayClassName: a.props.dayClassName,
                     calendarStartDay: a.props.calendarStartDay,
                     monthClassName: a.props.monthClassName,
@@ -3321,7 +3317,7 @@ var Fr = [
                     onDayMouseEnter: a.handleDayMouseEnter,
                     onMouseLeave: a.handleMonthMouseLeave,
                     onWeekSelect: a.props.onWeekSelect,
-                    orderInDisplay: n,
+                    orderInDisplay: o,
                     formatWeekNumber: a.props.formatWeekNumber,
                     locale: a.props.locale,
                     minDate: a.props.minDate,
@@ -3363,8 +3359,8 @@ var Fr = [
                     showQuarterYearPicker: a.props.showQuarterYearPicker,
                     isInputFocused: a.props.isInputFocused,
                     containerRef: a.containerRef,
-                    monthShowsDuplicateDaysEnd: p,
-                    monthShowsDuplicateDaysStart: l,
+                    monthShowsDuplicateDaysEnd: l,
+                    monthShowsDuplicateDaysStart: c,
                   })
                 )
               );

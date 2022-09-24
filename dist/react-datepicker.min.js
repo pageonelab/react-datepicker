@@ -3034,16 +3034,14 @@
               var e = a.props,
                 t = e.preSelection,
                 r = e.selected,
-                n = e.openToDate,
-                o = e.monthsShownStartDate,
-                s = gr(a.props),
-                i = kr(a.props),
-                p = Tt(),
-                l = o || n || r || t;
+                n = e.openToDate;
+              e.monthsShownStartDate;
+              var o = gr(a.props),
+                s = kr(a.props),
+                i = Tt(),
+                p = n || r || t;
               return (
-                console.log("monthsShownStartDate"),
-                console.log(o),
-                l || (s && ot.default(p, s) ? s : i && nt.default(p, i) ? i : p)
+                p || (o && ot.default(i, o) ? o : s && nt.default(i, s) ? s : i)
               );
             }),
             wt(Ct(a), "increaseMonth", function () {
@@ -3606,32 +3604,28 @@
             }),
             wt(Ct(a), "renderMonths", function () {
               if (!a.props.showTimeSelectOnly && !a.props.showYearPicker) {
-                for (
-                  var e = [],
-                    t = a.props.showPreviousMonths
-                      ? a.props.monthsShown - 1
-                      : 0,
-                    r = Ce.default(a.state.date, t),
-                    n = 0;
-                  n < a.props.monthsShown;
-                  ++n
-                ) {
-                  var o = n - a.props.monthSelectedIn,
-                    s = ge.default(r, o),
-                    i = "month-".concat(n),
-                    p = n < a.props.monthsShown - 1,
-                    l = n > 0;
+                var e = [],
+                  t = a.props.monthsShownStartDate,
+                  r = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
+                  n = Ce.default(a.state.date, r);
+                t < n && (n = t);
+                for (var o = 0; o < a.props.monthsShown; ++o) {
+                  var s = o - a.props.monthSelectedIn,
+                    i = ge.default(n, s),
+                    p = "month-".concat(o),
+                    l = o < a.props.monthsShown - 1,
+                    d = o > 0;
                   e.push(
                     ce.default.createElement(
                       "div",
                       {
-                        key: i,
+                        key: p,
                         ref: function (e) {
                           a.monthContainer = e;
                         },
                         className: "react-datepicker__month-container",
                       },
-                      a.renderHeader({ monthDate: s, i: n }),
+                      a.renderHeader({ monthDate: i, i: o }),
                       ce.default.createElement(Wr, {
                         chooseDayAriaLabelPrefix:
                           a.props.chooseDayAriaLabelPrefix,
@@ -3640,7 +3634,7 @@
                         weekAriaLabelPrefix: a.props.weekAriaLabelPrefix,
                         ariaLabelPrefix: a.props.monthAriaLabelPrefix,
                         onChange: a.changeMonthYear,
-                        day: s,
+                        day: i,
                         dayClassName: a.props.dayClassName,
                         calendarStartDay: a.props.calendarStartDay,
                         monthClassName: a.props.monthClassName,
@@ -3649,7 +3643,7 @@
                         onDayMouseEnter: a.handleDayMouseEnter,
                         onMouseLeave: a.handleMonthMouseLeave,
                         onWeekSelect: a.props.onWeekSelect,
-                        orderInDisplay: n,
+                        orderInDisplay: o,
                         formatWeekNumber: a.props.formatWeekNumber,
                         locale: a.props.locale,
                         minDate: a.props.minDate,
@@ -3692,8 +3686,8 @@
                         showQuarterYearPicker: a.props.showQuarterYearPicker,
                         isInputFocused: a.props.isInputFocused,
                         containerRef: a.containerRef,
-                        monthShowsDuplicateDaysEnd: p,
-                        monthShowsDuplicateDaysStart: l,
+                        monthShowsDuplicateDaysEnd: l,
+                        monthShowsDuplicateDaysStart: d,
                       })
                     )
                   );

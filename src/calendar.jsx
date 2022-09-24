@@ -264,10 +264,7 @@ export default class Calendar extends React.Component {
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
     const current = newDate();
-    const initialDate =
-      monthsShownStartDate || openToDate || selected || preSelection;
-    console.log("monthsShownStartDate");
-    console.log(monthsShownStartDate);
+    const initialDate = openToDate || selected || preSelection;
     if (initialDate) {
       return initialDate;
     } else {
@@ -832,10 +829,16 @@ export default class Calendar extends React.Component {
     }
 
     var monthList = [];
+    var monthsShownStartDate = this.props.monthsShownStartDate;
     var monthsToSubtract = this.props.showPreviousMonths
       ? this.props.monthsShown - 1
       : 0;
     var fromMonthDate = subMonths(this.state.date, monthsToSubtract);
+
+    if (monthsShownStartDate < fromMonthDate) {
+      fromMonthDate = monthsShownStartDate;
+    }
+
     for (var i = 0; i < this.props.monthsShown; ++i) {
       var monthsToAdd = i - this.props.monthSelectedIn;
       var monthDate = addMonths(fromMonthDate, monthsToAdd);

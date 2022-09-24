@@ -11,6 +11,7 @@
       monthsShown={4}
       startDate={startDate}
       endDate={futureDateRangeEnd}
+      openToDate={startDate}
       selectsRange
       monthsShownStartDate={new Date()}
     />
