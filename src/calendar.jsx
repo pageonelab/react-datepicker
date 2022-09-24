@@ -851,7 +851,7 @@ export default class Calendar extends React.Component {
           ref={(div) => {
             this.monthContainer = div;
           }}
-          className="react-datepicker__month-container"
+          className="react-datepicker__month-container react-datepicker__month-container-test-classname"
         >
           {this.renderHeader({ monthDate, i })}
           <Month

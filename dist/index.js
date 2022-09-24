@@ -3298,7 +3298,8 @@ var Fr = [
                     ref: function (e) {
                       a.monthContainer = e;
                     },
-                    className: "react-datepicker__month-container",
+                    className:
+                      "react-datepicker__month-container react-datepicker__month-container-test-classname",
                   },
                   a.renderHeader({ monthDate: i, i: o }),
                   ne.default.createElement(Or, {
