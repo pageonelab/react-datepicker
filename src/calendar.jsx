@@ -120,6 +120,7 @@ export default class Calendar extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
+    monthsShownStartDate: PropTypes.instanceOf(Date),
     monthSelectedIn: PropTypes.number,
     nextMonthAriaLabel: PropTypes.string,
     nextYearAriaLabel: PropTypes.string,
@@ -210,6 +211,7 @@ export default class Calendar extends React.Component {
       date: this.getDateInView(),
       selectingDate: null,
       monthContainer: null,
+      monthsShownStartDate: this.props.monthsShownStartDate,
     };
   }
 
@@ -827,12 +829,27 @@ export default class Calendar extends React.Component {
     }
 
     var monthList = [];
+
     var monthsToSubtract = this.props.showPreviousMonths
       ? this.props.monthsShown - 1
       : 0;
-    var fromMonthDate = subMonths(this.state.date, monthsToSubtract);
+
+    // Start showing month from monthsShownStartDate if the value is specified.
+    var dateToStart = this.state.date;
+    if (this.props.monthsShownStartDate) {
+      dateToStart = this.props.monthsShownStartDate;
+    }
+
+    var fromMonthDate = subMonths(dateToStart, monthsToSubtract);
+
     for (var i = 0; i < this.props.monthsShown; ++i) {
       var monthsToAdd = i - this.props.monthSelectedIn;
+
+      // If specified monthsShownStartDate, we fix the start date.
+      if (this.props.monthsShownStartDate) {
+        monthsToAdd = i;
+      }
+
       var monthDate = addMonths(fromMonthDate, monthsToAdd);
       var monthKey = `month-${i}`;
       var monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;
@@ -843,7 +860,7 @@ export default class Calendar extends React.Component {
           ref={(div) => {
             this.monthContainer = div;
           }}
-          className="react-datepicker__month-container"
+          className="react-datepicker__month-container react-datepicker__month-container-test-3"
         >
           {this.renderHeader({ monthDate, i })}
           <Month
