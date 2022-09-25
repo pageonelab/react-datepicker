@@ -211,6 +211,7 @@ export default class Calendar extends React.Component {
       date: this.getDateInView(),
       selectingDate: null,
       monthContainer: null,
+      monthsShownStartDate: this.props.monthsShownStartDate,
     };
   }
 
@@ -259,8 +260,7 @@ export default class Calendar extends React.Component {
   };
 
   getDateInView = () => {
-    const { preSelection, selected, openToDate, monthsShownStartDate } =
-      this.props;
+    const { preSelection, selected, openToDate } = this.props;
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
     const current = newDate();
@@ -836,8 +836,8 @@ export default class Calendar extends React.Component {
 
     // Start showing month from monthsShownStartDate if the value is specified.
     var dateToStart = this.state.date;
-    if (this.props.monthsShownStartDate) {
-      dateToStart = this.props.monthsShownStartDate;
+    if (this.state.monthsShownStartDate) {
+      dateToStart = this.state.monthsShownStartDate;
     }
 
     var fromMonthDate = subMonths(dateToStart, monthsToSubtract);
@@ -854,7 +854,7 @@ export default class Calendar extends React.Component {
           ref={(div) => {
             this.monthContainer = div;
           }}
-          className="react-datepicker__month-container react-datepicker__month-container-test-classname"
+          className="react-datepicker__month-container react-datepicker__month-container-test-classname2"
         >
           {this.renderHeader({ monthDate, i })}
           <Month

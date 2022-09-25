@@ -2728,9 +2728,8 @@ var Fr = [
           var e = a.props,
             t = e.preSelection,
             r = e.selected,
-            n = e.openToDate;
-          e.monthsShownStartDate;
-          var o = ur(a.props),
+            n = e.openToDate,
+            o = ur(a.props),
             s = fr(a.props),
             i = Mt(),
             p = n || r || t;
@@ -3282,7 +3281,7 @@ var Fr = [
             var e = [],
               t = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
               r = a.state.date;
-            a.props.monthsShownStartDate && (r = a.props.monthsShownStartDate);
+            a.state.monthsShownStartDate && (r = a.state.monthsShownStartDate);
             for (
               var n = ve.default(r, t), o = 0;
               o < a.props.monthsShown;
@@ -3302,7 +3301,7 @@ var Fr = [
                       a.monthContainer = e;
                     },
                     className:
-                      "react-datepicker__month-container react-datepicker__month-container-test-classname",
+                      "react-datepicker__month-container react-datepicker__month-container-test-classname2",
                   },
                   a.renderHeader({ monthDate: i, i: o }),
                   ne.default.createElement(Or, {
@@ -3447,6 +3446,7 @@ var Fr = [
           date: a.getDateInView(),
           selectingDate: null,
           monthContainer: null,
+          monthsShownStartDate: a.props.monthsShownStartDate,
         }),
         a
       );
