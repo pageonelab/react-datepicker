@@ -3606,15 +3606,16 @@
                 var e = [],
                   t = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
                   r = a.state.date;
-                a.state.monthsShownStartDate &&
-                  (r = a.state.monthsShownStartDate);
+                a.props.monthsShownStartDate &&
+                  (r = a.props.monthsShownStartDate);
                 for (
                   var n = Ce.default(r, t), o = 0;
                   o < a.props.monthsShown;
                   ++o
                 ) {
-                  var s = o - a.props.monthSelectedIn,
-                    i = ge.default(n, s),
+                  var s = o - a.props.monthSelectedIn;
+                  a.props.monthsShownStartDate && (s = o);
+                  var i = ge.default(n, s),
                     p = "month-".concat(o),
                     l = o < a.props.monthsShown - 1,
                     d = o > 0;
@@ -3627,7 +3628,7 @@
                           a.monthContainer = e;
                         },
                         className:
-                          "react-datepicker__month-container react-datepicker__month-container-test-classname2",
+                          "react-datepicker__month-container react-datepicker__month-container-test-3",
                       },
                       a.renderHeader({ monthDate: i, i: o }),
                       ce.default.createElement(Wr, {

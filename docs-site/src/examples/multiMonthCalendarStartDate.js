@@ -4,16 +4,25 @@
   var futureDateRangeEnd = new Date(new Date().setDate(today.getDate() + 33));
   const [startDate, setStartDate] = useState(futureDateRangeStart);
 
+  var styles = {
+    container: {
+      maxHeight: 300,
+      overflowY: "scroll",
+    },
+  };
+
   return (
-    <DatePicker
-      selected={futureDateRangeStart}
-      onChange={(date) => setStartDate(date)}
-      monthsShown={4}
-      startDate={startDate}
-      endDate={futureDateRangeEnd}
-      openToDate={startDate}
-      selectsRange
-      monthsShownStartDate={new Date()}
-    />
+    <div style={styles.container}>
+      <DatePicker
+        selected={futureDateRangeStart}
+        onChange={(date) => setStartDate(date)}
+        monthsShown={6}
+        startDate={startDate}
+        endDate={futureDateRangeEnd}
+        selectsRange={true}
+        inline
+        monthsShownStartDate={new Date()}
+      />
+    </div>
   );
 };
