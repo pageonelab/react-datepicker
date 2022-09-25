@@ -3605,11 +3605,15 @@
             wt(Ct(a), "renderMonths", function () {
               if (!a.props.showTimeSelectOnly && !a.props.showYearPicker) {
                 var e = [],
-                  t = a.props.monthsShownStartDate,
-                  r = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
-                  n = Ce.default(a.state.date, r);
-                t < n && (n = t);
-                for (var o = 0; o < a.props.monthsShown; ++o) {
+                  t = a.props.showPreviousMonths ? a.props.monthsShown - 1 : 0,
+                  r = a.state.date;
+                a.props.monthsShownStartDate &&
+                  (r = a.props.monthsShownStartDate);
+                for (
+                  var n = Ce.default(r, t), o = 0;
+                  o < a.props.monthsShown;
+                  ++o
+                ) {
                   var s = o - a.props.monthSelectedIn,
                     i = ge.default(n, s),
                     p = "month-".concat(o),
