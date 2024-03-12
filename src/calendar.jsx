@@ -129,6 +129,7 @@ export default class Calendar extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
+    monthsShownStartDate: PropTypes.instanceOf(Date),
     monthSelectedIn: PropTypes.number,
     nextMonthAriaLabel: PropTypes.string,
     nextYearAriaLabel: PropTypes.string,
@@ -229,6 +230,8 @@ export default class Calendar extends React.Component {
       selectingDate: null,
       monthContainer: null,
       isRenderAriaLiveMessage: false,
+monthsShownStartDate: this.props.monthsShownStartDate,
+
     };
   }
 
@@ -873,13 +876,28 @@ export default class Calendar extends React.Component {
     }
 
     const monthList = [];
+
     const monthsToSubtract = this.props.showPreviousMonths
       ? this.props.monthsShown - 1
       : 0;
-    const fromMonthDate = subMonths(this.state.date, monthsToSubtract);
+
+    // Start showing month from monthsShownStartDate if the value is specified.
+    var dateToStart = this.state.date;
+    if (this.props.monthsShownStartDate) {
+      dateToStart = this.props.monthsShownStartDate;
+    }
+
+    const fromMonthDate = subMonths(dateToStart, monthsToSubtract);
     const monthSelectedIn = this.props.monthSelectedIn ?? monthsToSubtract;
+
     for (let i = 0; i < this.props.monthsShown; ++i) {
       const monthsToAdd = i - monthSelectedIn + monthsToSubtract;
+
+      // If specified monthsShownStartDate, we fix the start date.
+      if (this.props.monthsShownStartDate) {
+        monthsToAdd = i;
+      }
+
       const monthDate = addMonths(fromMonthDate, monthsToAdd);
       const monthKey = `month-${i}`;
       const monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;

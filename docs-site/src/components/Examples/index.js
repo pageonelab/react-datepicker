@@ -105,6 +105,7 @@ import SelectsMultiple from "../../examples/selectsMultiple";
 import CalendarIconExternal from "../../examples/calendarIconExternal";
 import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
 import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
+import MultiMonthsCalendarStartDate from "../../examples/multiMonthCalendarStartDate";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -537,6 +538,10 @@ export default class exampleComponents extends React.Component {
       title: "External Form",
       component: ExternalForm,
     },
+    {
+      title: "Multimonth Calendar Start date",
+      component: MultiMonthsCalendarStartDate,
+    },
   ];
 
   handleAnchorClick = (e, id) => {
@@ -562,7 +567,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`,
+                    `example-${slugify(example.title, { lower: true })}`
                   )
                 }
               >

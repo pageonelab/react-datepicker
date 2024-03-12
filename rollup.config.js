@@ -8,6 +8,7 @@ import commonjs from "rollup-plugin-commonjs";
 import filesize from "rollup-plugin-filesize";
 import localResolve from "rollup-plugin-local-resolve";
 import { terser } from "rollup-plugin-terser";
+import copy from "rollup-plugin-copy";
 
 import replace from "rollup-plugin-replace";
 import pkg from "./package.json";
@@ -69,6 +70,9 @@ const config = {
     terser(),
     replace({
       "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
+    copy({
+      targets: [{ src: "src/*.d.ts", dest: "dist" }],
     }),
   ],
   external: Object.keys(pkg.dependencies)
