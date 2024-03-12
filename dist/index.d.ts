@@ -5,4 +5,7 @@ declare module "react-datepicker" {
   export interface ReactDatePickerProps extends OriginalProps {
     monthsShownStartDate?: Date;
   }
+
+  const DatePicker: React.ComponentType<ReactDatePickerProps>;
+  export default DatePicker;
 }
