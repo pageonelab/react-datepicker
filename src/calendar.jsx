@@ -891,7 +891,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
     const monthSelectedIn = this.props.monthSelectedIn ?? monthsToSubtract;
 
     for (let i = 0; i < this.props.monthsShown; ++i) {
-      const monthsToAdd = i - monthSelectedIn + monthsToSubtract;
+      var monthsToAdd = i - monthSelectedIn + monthsToSubtract;
 
       // If specified monthsShownStartDate, we fix the start date.
       if (this.props.monthsShownStartDate) {
