@@ -1,11 +1,10 @@
-// src/react-datepicker.d.ts
 declare module "react-datepicker" {
-  import { ReactDatePickerProps as OriginalProps } from "@types/react-datepicker";
+  import { ReactDatePickerProps as OriginalProps} from "@types/react-datepicker";
 
   export interface ReactDatePickerProps extends OriginalProps {
     monthsShownStartDate?: Date;
   }
-
-  const DatePicker: React.ComponentType<ReactDatePickerProps>;
+  
+  const DatePicker: React.ComponentType<ReactDatePickerProps<string, boolean>>;
   export default DatePicker;
 }
