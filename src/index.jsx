@@ -176,13 +176,13 @@ export default class DatePicker extends React.Component {
           date: PropTypes.instanceOf(Date).isRequired,
           message: PropTypes.string,
         }),
-      ]),
+      ])
     ),
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      }),
+      })
     ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
@@ -212,6 +212,7 @@ export default class DatePicker extends React.Component {
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
     monthsShownStartDate: PropTypes.instanceOf(Date),
+    shouldScrollToSelectedMonth: PropTypes.bool,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onChange: PropTypes.func.isRequired,
@@ -466,10 +467,10 @@ export default class DatePicker extends React.Component {
               !skipSetBlur && this.setBlur();
 
               this.setState({ inputValue: null });
-            },
+            }
           );
         }
-      },
+      }
     );
   };
   inputOk = () => isDate(this.state.preSelection);
@@ -558,7 +559,7 @@ export default class DatePicker extends React.Component {
       this.props.dateFormat,
       this.props.locale,
       this.props.strictParsing,
-      this.props.minDate,
+      this.props.minDate
     );
     // Use date from `selected` prop when manipulating only time for input value
     if (
@@ -578,7 +579,7 @@ export default class DatePicker extends React.Component {
         date = getStartOfWeek(
           date,
           this.props.locale,
-          this.props.calendarStartDay,
+          this.props.calendarStartDay
         );
       }
       this.setSelected(date, event, true);
@@ -598,7 +599,7 @@ export default class DatePicker extends React.Component {
       date = getStartOfWeek(
         date,
         this.props.locale,
-        this.props.calendarStartDay,
+        this.props.calendarStartDay
       );
     }
     this.setSelected(date, event, false, monthSelectedIn);
@@ -712,12 +713,12 @@ export default class DatePicker extends React.Component {
           onChange([changedDate], event);
         } else {
           const isChangedDateAlreadySelected = selectedDates.some(
-            (selectedDate) => isSameDay(selectedDate, changedDate),
+            (selectedDate) => isSameDay(selectedDate, changedDate)
           );
 
           if (isChangedDateAlreadySelected) {
             const nextDates = selectedDates.filter(
-              (selectedDate) => !isSameDay(selectedDate, changedDate),
+              (selectedDate) => !isSameDay(selectedDate, changedDate)
             );
 
             onChange(nextDates, event);
@@ -746,7 +747,7 @@ export default class DatePicker extends React.Component {
         date = getStartOfWeek(
           date,
           this.props.locale,
-          this.props.calendarStartDay,
+          this.props.calendarStartDay
         );
       }
       const dateStartOfDay = startOfDay(date);
@@ -755,7 +756,7 @@ export default class DatePicker extends React.Component {
         isValidDateSelection = isDayInRange(
           date,
           this.props.minDate,
-          this.props.maxDate,
+          this.props.maxDate
         );
       } else if (hasMinDate) {
         const minDateStartOfDay = startOfDay(this.props.minDate);
@@ -892,7 +893,7 @@ export default class DatePicker extends React.Component {
             this.setFocus();
             this.setState({ preventFocus: false });
           });
-        },
+        }
       );
     }
   };
@@ -952,7 +953,7 @@ export default class DatePicker extends React.Component {
           newSelection = getStartOfWeek(
             copy,
             this.props.locale,
-            this.props.calendarStartDay,
+            this.props.calendarStartDay
           );
           break;
         case "End":
@@ -1109,6 +1110,7 @@ export default class DatePicker extends React.Component {
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
         monthsShownStartDate={this.props.monthsShownStartDate}
+        shouldScrollToSelectedMonth={this.props.shouldScrollToSelectedMonth}
         monthSelectedIn={this.state.monthSelectedIn}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
@@ -1187,7 +1189,7 @@ export default class DatePicker extends React.Component {
         {
           dateFormat: longDateFormat,
           locale,
-        },
+        }
       )}. ${
         this.props.endDate
           ? "End date: " +
@@ -1201,17 +1203,17 @@ export default class DatePicker extends React.Component {
       if (this.props.showTimeSelectOnly) {
         ariaLiveMessage = `Selected time: ${safeDateFormat(
           this.props.selected,
-          { dateFormat, locale },
+          { dateFormat, locale }
         )}`;
       } else if (this.props.showYearPicker) {
         ariaLiveMessage = `Selected year: ${safeDateFormat(
           this.props.selected,
-          { dateFormat: "yyyy", locale },
+          { dateFormat: "yyyy", locale }
         )}`;
       } else if (this.props.showMonthYearPicker) {
         ariaLiveMessage = `Selected month: ${safeDateFormat(
           this.props.selected,
-          { dateFormat: "MMMM yyyy", locale },
+          { dateFormat: "MMMM yyyy", locale }
         )}`;
       } else if (this.props.showQuarterYearPicker) {
         ariaLiveMessage = `Selected quarter: ${safeDateFormat(
@@ -1219,7 +1221,7 @@ export default class DatePicker extends React.Component {
           {
             dateFormat: "yyyy, QQQ",
             locale,
-          },
+          }
         )}`;
       } else {
         ariaLiveMessage = `Selected date: ${safeDateFormat(
@@ -1227,7 +1229,7 @@ export default class DatePicker extends React.Component {
           {
             dateFormat: longDateFormat,
             locale,
-          },
+          }
         )}`;
       }
     }
@@ -1259,7 +1261,7 @@ export default class DatePicker extends React.Component {
             ? safeDateRangeFormat(
                 this.props.startDate,
                 this.props.endDate,
-                this.props,
+                this.props
               )
             : this.props.selectsMultiple
               ? safeMultipleDatesFormat(this.props.selectedDates, this.props)
@@ -1319,7 +1321,7 @@ export default class DatePicker extends React.Component {
           className={classnames(
             "react-datepicker__close-icon",
             clearButtonClassName,
-            { "react-datepicker__close-icon--disabled": disabled },
+            { "react-datepicker__close-icon--disabled": disabled }
           )}
           disabled={disabled}
           aria-label={ariaLabelClose}

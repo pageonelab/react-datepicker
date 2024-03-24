@@ -54,7 +54,7 @@ const DROPDOWN_FOCUS_CLASSNAMES = [
 const isDropdownSelect = (element = {}) => {
   const classNames = (element.className || "").split(/\s+/);
   return DROPDOWN_FOCUS_CLASSNAMES.some(
-    (testClassname) => classNames.indexOf(testClassname) >= 0,
+    (testClassname) => classNames.indexOf(testClassname) >= 0
   );
 };
 
@@ -98,13 +98,13 @@ export default class Calendar extends React.Component {
           date: PropTypes.instanceOf(Date).isRequired,
           message: PropTypes.string,
         }),
-      ]),
+      ])
     ),
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      }),
+      })
     ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
@@ -116,7 +116,7 @@ export default class Calendar extends React.Component {
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      }),
+      })
     ),
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
@@ -130,6 +130,7 @@ export default class Calendar extends React.Component {
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
     monthsShownStartDate: PropTypes.instanceOf(Date),
+    shouldScrollToSelectedMonth: PropTypes.bool,
     monthSelectedIn: PropTypes.number,
     nextMonthAriaLabel: PropTypes.string,
     nextYearAriaLabel: PropTypes.string,
@@ -224,14 +225,15 @@ export default class Calendar extends React.Component {
     super(props);
 
     this.containerRef = React.createRef();
+    this.selectedMonthRef = React.createRef();
 
     this.state = {
       date: this.getDateInView(),
       selectingDate: null,
       monthContainer: null,
       isRenderAriaLiveMessage: false,
-monthsShownStartDate: this.props.monthsShownStartDate,
-
+      monthsShownStartDate: this.props.monthsShownStartDate,
+      shouldScrollToSelectedMonth: this.props.shouldScrollToSelectedMonth,
     };
   }
 
@@ -245,6 +247,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
         this.setState({ monthContainer: this.monthContainer });
       })();
     }
+    this.scrollToSelectedMonth();
   }
 
   componentDidUpdate(prevProps) {
@@ -255,13 +258,13 @@ monthsShownStartDate: this.props.monthsShownStartDate,
     ) {
       const hasMonthChanged = !isSameMonth(
         this.state.date,
-        this.props.preSelection,
+        this.props.preSelection
       );
       this.setState(
         {
           date: this.props.preSelection,
         },
-        () => hasMonthChanged && this.handleCustomMonthChange(this.state.date),
+        () => hasMonthChanged && this.handleCustomMonthChange(this.state.date)
       );
     } else if (
       this.props.openToDate &&
@@ -272,6 +275,21 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       });
     }
   }
+
+  scrollToSelectedMonth = () => {
+    // Ensure the ref is current and the function is not called server-side where document is undefined
+    if (
+      this.selectedMonthRef &&
+      this.selectedMonthRef.current &&
+      typeof window !== "undefined"
+    ) {
+      // Scroll the month container to the selected month element
+      // You might need to adjust this logic based on your exact DOM structure and desired scroll behavior
+      this.selectedMonthRef.current.scrollIntoView({
+        behavior: "instant",
+      });
+    }
+  };
 
   handleClickOutside = (event) => {
     this.props.onClickOutside(event);
@@ -310,7 +328,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: addMonths(date, 1),
       }),
-      () => this.handleMonthChange(this.state.date),
+      () => this.handleMonthChange(this.state.date)
     );
   };
 
@@ -319,7 +337,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: subMonths(date, 1),
       }),
-      () => this.handleMonthChange(this.state.date),
+      () => this.handleMonthChange(this.state.date)
     );
   };
 
@@ -395,7 +413,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: setYear(date, year),
       }),
-      () => this.handleYearChange(this.state.date),
+      () => this.handleYearChange(this.state.date)
     );
   };
 
@@ -404,7 +422,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: setMonth(date, month),
       }),
-      () => this.handleMonthChange(this.state.date),
+      () => this.handleMonthChange(this.state.date)
     );
   };
 
@@ -413,7 +431,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: setYear(setMonth(date, getMonth(monthYear)), getYear(monthYear)),
       }),
-      () => this.handleMonthYearChange(this.state.date),
+      () => this.handleMonthYearChange(this.state.date)
     );
   };
 
@@ -421,7 +439,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
     const startOfWeek = getStartOfWeek(
       date,
       this.props.locale,
-      this.props.calendarStartDay,
+      this.props.calendarStartDay
     );
 
     const dayNames = [];
@@ -429,7 +447,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       dayNames.push(
         <div key="W" className="react-datepicker__day-name">
           {this.props.weekLabel || "#"}
-        </div>,
+        </div>
       );
     }
     return dayNames.concat(
@@ -446,13 +464,13 @@ monthsShownStartDate: this.props.monthsShownStartDate,
             key={offset}
             className={classnames(
               "react-datepicker__day-name",
-              weekDayClassName,
+              weekDayClassName
             )}
           >
             {weekDayName}
           </div>
         );
-      }),
+      })
     );
   };
 
@@ -470,10 +488,10 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: subYears(
           date,
-          this.props.showYearPicker ? this.props.yearItemNumber : 1,
+          this.props.showYearPicker ? this.props.yearItemNumber : 1
         ),
       }),
-      () => this.handleYearChange(this.state.date),
+      () => this.handleYearChange(this.state.date)
     );
   };
 
@@ -571,10 +589,10 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       ({ date }) => ({
         date: addYears(
           date,
-          this.props.showYearPicker ? this.props.yearItemNumber : 1,
+          this.props.showYearPicker ? this.props.yearItemNumber : 1
         ),
       }),
-      () => this.handleYearChange(this.state.date),
+      () => this.handleYearChange(this.state.date)
     );
   };
 
@@ -794,22 +812,22 @@ monthsShownStartDate: this.props.monthsShownStartDate,
 
     const prevMonthButtonDisabled = monthDisabledBefore(
       this.state.date,
-      this.props,
+      this.props
     );
 
     const nextMonthButtonDisabled = monthDisabledAfter(
       this.state.date,
-      this.props,
+      this.props
     );
 
     const prevYearButtonDisabled = yearDisabledBefore(
       this.state.date,
-      this.props,
+      this.props
     );
 
     const nextYearButtonDisabled = yearDisabledAfter(
       this.state.date,
-      this.props,
+      this.props
     );
 
     const showDayNames =
@@ -902,6 +920,17 @@ monthsShownStartDate: this.props.monthsShownStartDate,
       const monthKey = `month-${i}`;
       const monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;
       const monthShowsDuplicateDaysStart = i > 0;
+
+      let shouldScrollToSelectedMonth = false;
+
+      if (
+        this.props.shouldScrollToSelectedMonth &&
+        monthDate.getMonth() === this.state.date.getMonth() &&
+        monthDate.getYear() === this.state.date.getYear()
+      ) {
+        shouldScrollToSelectedMonth = true;
+      }
+
       monthList.push(
         <div
           key={monthKey}
@@ -910,6 +939,9 @@ monthsShownStartDate: this.props.monthsShownStartDate,
           }}
           className="react-datepicker__month-container"
         >
+          {shouldScrollToSelectedMonth && (
+            <div ref={this.selectedMonthRef}></div>
+          )}
           {this.renderHeader({ monthDate, i })}
           <Month
             chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
@@ -980,7 +1012,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
             monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
             monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
           />
-        </div>,
+        </div>
       );
     }
     return monthList;
@@ -1064,7 +1096,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
   renderAriaLiveRegion = () => {
     const { startPeriod, endPeriod } = getYearsPeriod(
       this.state.date,
-      this.props.yearItemNumber,
+      this.props.yearItemNumber
     );
     let ariaLiveMessage;
 
@@ -1078,7 +1110,7 @@ monthsShownStartDate: this.props.monthsShownStartDate,
     } else {
       ariaLiveMessage = `${getMonthInLocale(
         getMonth(this.state.date),
-        this.props.locale,
+        this.props.locale
       )} ${getYear(this.state.date)}`;
     }
 

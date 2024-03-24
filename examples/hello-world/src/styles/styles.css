@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .word-spacing-1 {
+    word-spacing: 0.25rem; /* 4px */
+  }
+  .word-spacing-4 {
+    word-spacing: 1rem; /* 16px */
+  }
+  .word-spacing-8 {
+    word-spacing: 2rem; /* 32px */
+  }
+}
+
+.no-gap {
+  gap: 0px;
+}
