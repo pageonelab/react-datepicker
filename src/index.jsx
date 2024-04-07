@@ -81,6 +81,7 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
+      allowSameDayInRange: false,
       dateFormat: "MM/dd/yyyy",
       dateFormatCalendar: "LLLL yyyy",
       onChange() {},
@@ -141,6 +142,7 @@ export default class DatePicker extends React.Component {
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
+    allowSameDayInRange: PropTypes.bool,
     ariaDescribedBy: PropTypes.string,
     ariaInvalid: PropTypes.string,
     ariaLabelClose: PropTypes.string,
@@ -651,12 +653,24 @@ export default class DatePicker extends React.Component {
       minTime,
     } = this.props;
 
-    if (
-      !isEqual(this.props.selected, changedDate) ||
-      this.props.allowSameDay ||
-      selectsRange ||
-      selectsMultiple
-    ) {
+    let canChangeDate = false;
+    if (selectsRange) {
+      if (
+        !this.props.allowSameDayInRange &&
+        isSameDay(this.props.selected, changedDate)
+      ) {
+        canChangeDate = false;
+      } else {
+        canChangeDate = true;
+      }
+    } else {
+      canChangeDate =
+        !isEqual(this.props.selected, changedDate) ||
+        this.props.allowSameDay ||
+        selectsMultiple;
+    }
+
+    if (canChangeDate) {
       if (changedDate !== null) {
         if (
           this.props.selected &&
